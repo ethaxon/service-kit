@@ -1,0 +1,76 @@
+name: Native release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    uses: ./.github/workflows/ci.yml
+  build:
+    needs: checks
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest, target: x86_64-unknown-linux-gnu, builder: zigbuild, env: cross }
+          - { os: ubuntu-latest, target: aarch64-unknown-linux-gnu, builder: zigbuild, env: cross }
+          - { os: ubuntu-latest, target: x86_64-unknown-linux-musl, builder: zigbuild, env: cross }
+          - { os: ubuntu-latest, target: aarch64-unknown-linux-musl, builder: zigbuild, env: cross }
+          - { os: macos-latest, target: x86_64-apple-darwin, builder: cargo, env: '' }
+          - { os: macos-latest, target: aarch64-apple-darwin, builder: cargo, env: '' }
+          - { os: windows-latest, target: x86_64-pc-windows-msvc, builder: cargo, env: '', msvc: amd64 }
+          - { os: windows-latest, target: aarch64-pc-windows-msvc, builder: cargo, env: '', msvc: amd64_arm64 }
+    runs-on: ${{ matrix.os }}
+    env:
+      MISE_ENV: ${{ matrix.env }}
+      RELEASE_TAG: ${{ github.ref_name }}
+      TARGET: ${{ matrix.target }}
+      BUILDER: ${{ matrix.builder }}
+    steps:
+      - name: Enable real symlink checkout
+        run: git config --global core.symlinks true
+      - uses: actions/checkout@v7
+      - uses: jdx/mise-action@v5
+      - uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+        with:
+          arch: ${{ matrix.msvc }}
+      - run: mise exec -- just setup
+      - name: Add target, compile and package
+        shell: bash
+        run: |
+          set -euo pipefail
+          mise exec -- rustup target add "$TARGET"
+          mise exec -- node scripts/dev-cli.ts build --target "$TARGET" --builder "$BUILDER"
+          mise exec -- node scripts/dev-cli.ts package --target "$TARGET" --release-tag "$RELEASE_TAG"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: native-${{ matrix.target }}
+          path: dist/*
+          if-no-files-found: error
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: native-*
+          path: dist
+          merge-multiple: true
+      - name: Publish archives and checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd dist
+          cat ./*.sha256 > SHA256SUMS
+          gh release create "$RELEASE_TAG" ./* --verify-tag --generate-notes --title "$RELEASE_TAG"

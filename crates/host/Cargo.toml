@@ -1,0 +1,13 @@
+[package]
+name = "service-kit-host"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+service-kit-core = { path = "../core" }
+serde_json.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows-service.workspace = true
+windows-sys.workspace = true

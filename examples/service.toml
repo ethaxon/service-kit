@@ -1,0 +1,11 @@
+id = "example.echo"
+executable = "/bin/echo"
+args = ["hello from service-kit", "$literal; no shell"]
+workingDirectory = "/tmp"
+description = "Harmless short-lived example; plan only during tests"
+scope = "user"
+startup = "manual"
+restart = "never"
+
+[environment]
+EXAMPLE = "value with spaces"

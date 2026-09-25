@@ -1,0 +1,4 @@
+# Optional Linux cross-build environment: MISE_ENV=cross mise install
+[tools]
+zig = "0.17.1"
+"cargo:cargo-zigbuild" = "0.24.1"

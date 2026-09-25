@@ -1,0 +1,13 @@
+{
+  "name": "@service-kit/node",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./index.ts",
+  "engines": {
+    "node": ">=24.12.0"
+  },
+  "description": "Cross-platform native service management with explicit capabilities and inspectable plans.",
+  "license": "MIT",
+  "repository": "https://github.com/ethaxon/service-kit"
+}

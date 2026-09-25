@@ -1,0 +1,5 @@
+packages:
+  - docsite
+  - sdk/node
+allowBuilds:
+  esbuild: true

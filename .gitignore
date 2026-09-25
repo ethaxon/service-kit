@@ -1,0 +1,8 @@
+/target/
+/node_modules/
+/docsite/node_modules/
+/docsite/.vitepress/cache/
+/docsite/.vitepress/dist/
+/dist/
+/temp/
+.DS_Store

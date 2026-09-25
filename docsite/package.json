@@ -1,0 +1,17 @@
+{
+  "name": "@service-kit/docsite",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vitepress build .",
+    "dev": "vitepress dev ."
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.0"
+  },
+  "version": "0.1.0",
+  "description": "Cross-platform native service management with explicit capabilities and inspectable plans.",
+  "license": "MIT",
+  "repository": "https://github.com/ethaxon/service-kit"
+}

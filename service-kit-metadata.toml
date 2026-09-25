@@ -1,0 +1,23 @@
+# Canonical project metadata. Run `just sync-metadata` after editing.
+schema_version = 1
+
+[project]
+name = "service-kit"
+display_name = "service-kit"
+version = "0.1.0"
+description = "Cross-platform native service management with explicit capabilities and inspectable plans."
+license = "MIT"
+repository_url = "https://github.com/ethaxon/service-kit"
+
+[docs]
+base = "/"
+cname = "service-kit.ethaxon.com"
+
+[[node_package]]
+manifest = "package.json"
+
+[[node_package]]
+manifest = "sdk/node/package.json"
+
+[[node_package]]
+manifest = "docsite/package.json"

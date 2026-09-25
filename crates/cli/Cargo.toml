@@ -1,0 +1,19 @@
+[package]
+name = "service-kit-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "service-kit"
+path = "src/main.rs"
+
+[dependencies]
+figment.workspace = true
+service-kit-core = { path = "../core" }
+service-kit-backends = { path = "../backends" }
+clap.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

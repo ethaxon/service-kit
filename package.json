@@ -1,0 +1,30 @@
+{
+  "name": "service-kit-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.15.0",
+  "engines": {
+    "node": ">=24.12.0"
+  },
+  "scripts": {
+    "check": "node scripts/dev-cli.ts check",
+    "test": "node scripts/dev-cli.ts test",
+    "build-docs": "node scripts/dev-cli.ts build-docs",
+    "build": "node scripts/dev-cli.ts build"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.7.1",
+    "@optique/core": "^1.3.6",
+    "effect": "^3.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.0",
+    "fflate": "^0.8.3",
+    "smol-toml": "^1.9.1",
+    "typescript": "^6.0.2"
+  },
+  "description": "Cross-platform native service management with explicit capabilities and inspectable plans.",
+  "license": "MIT",
+  "repository": "https://github.com/ethaxon/service-kit"
+}

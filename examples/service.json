@@ -1,0 +1,12 @@
+{
+  "id": "example.echo",
+  "executable": "/bin/echo",
+  "args": ["hello from service-kit", "$literal; no shell"],
+  "environment": { "EXAMPLE": "value with spaces" },
+  "workingDirectory": "/tmp",
+  "description": "Harmless short-lived example; plan only during tests",
+  "scope": "user",
+  "startup": "manual",
+  "restart": "never",
+  "backendOptions": {}
+}

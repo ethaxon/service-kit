@@ -1,0 +1,25 @@
+[workspace]
+members = ["crates/*"]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+license = "MIT"
+repository = "https://github.com/ethaxon/service-kit"
+description = "Cross-platform native service management with explicit capabilities and inspectable plans."
+
+[workspace.dependencies]
+figment = { version = "0.10", features = ["toml", "json", "yaml"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+clap = { version = "4", features = ["derive"] }
+libc = "0.2"
+tempfile = "3"
+windows-service = "0.8"
+windows-sys = { version = "0.61", features = ["Win32_Foundation", "Win32_System_JobObjects", "Win32_System_Threading", "Win32_Security", "Win32_Security_Authorization", "Win32_System_Memory"] }
+
+[profile.release]
+lto = "thin"
+strip = true
